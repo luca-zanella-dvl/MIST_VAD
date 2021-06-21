@@ -11,7 +11,7 @@ The paths below should be modified to adapt your project
 
 ## The pretrained model paths
 _C.I3D_MODEL_PATH='pretrained/model_rgb.pth'
-_C.C3D_MODEL_PATH='pretrained/C3D_Sport1M/pth'
+_C.C3D_MODEL_PATH='pretrained/C3D_Sport1M.pth'
 
 ## Trained Ckpts
 _C.UCF_C3D_MODEL_PATH='ckpts/UCF_C3D_AUC_0.8143.pth'
@@ -23,8 +23,8 @@ _C.STH_I3D_MODEL_PATH='ckpts/SHT_I3D_AUC_0.9483.pth'
 _C.VIS_DIR='outputs/'
 _C.TEST_SPATIAL_ANNOTATION_PATH='data/Test_Spatial_Annotation.npy'
 ############ 2. UCF Data ###########################
-_C.TRAIN_H5_PATH='data/UCFCrime-Frames.h5'
-_C.TEST_H5_PATH='data/UCFCrime-Frames-test.h5'
+_C.TRAIN_H5_PATH='data/UCFCrime-Frames-16.h5'
+_C.TEST_H5_PATH='data/UCFCrime-Frames-test-16.h5'
 _C.TESTING_TXT_PATH='data/Temporal_Anomaly_Annotation_New.txt'
 
 ############# 3. SHT Data ##########################
