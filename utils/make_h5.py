@@ -27,21 +27,22 @@ def Video2ImgH5(video_dir,h5_path,train_list,segment_len=16,max_vid_len=2000):
             for j in range(segment_len):
                 ret,frame=vc.read()
                 _,frame=cv2.imencode('.JPEG',frame)
-                frame=np.array(frame).tostring()
+                frame=np.array(frame).tobytes()
                 if ret:
                     tmp_frames.append(frame)
                 else:
                     print('Bug Reported!')
                     exit(-1)
+            tmp_frames = np.array(tmp_frames)
             h.create_dataset(key,data=tmp_frames,chunks=True)
         print(path)
 
     print('finished!')
 
 if __name__=='__main__':
-    video_dir='/data0/jiachang/Anomaly-Videos/'
-    h5_file_path='/data0/jiachang/UCFCrime-Frames-16.h5'
-    txt_path='/data0/jiachang/Weakly_Supervised_VAD/Datasets/Anomaly_Train.txt'
+    video_dir='/media/zanella/UCF_Crimes/Videos'
+    h5_file_path='data/UCFCrime-Frames-test-16.h5'
+    txt_path='/media/zanella/UCF_Crimes/Anomaly_Detection_splits/Anomaly_Test.txt'
     train_list=[]
     with open(txt_path,'r')as f:
         paths=f.readlines()
