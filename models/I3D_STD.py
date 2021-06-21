@@ -295,7 +295,7 @@ class I3D(torch.nn.Module):
         # out = self.softmax(out_logits)
         return out,out_4f,out_3f#, out_logits
 
-class I3D_SGA_STD(nn.Module):
+class I3D_SGA_STD(torch.nn.Module):
     def __init__(self,dropout_rate,expand_k,freeze_bn=False,freeze_backbone=False,freeze_blocks=None,freeze_bn_statics=False,
                  pretrained_backbone=False,pretrained_path=None):
         super(I3D_SGA_STD, self).__init__()
@@ -304,12 +304,12 @@ class I3D_SGA_STD(nn.Module):
         # self.Conv_Atten=Self_Guided_Attention(832,expand_k,out_t_channels=2)
         self.Conv_Atten=Self_Guided_Attention_Branch_Module(832,expand_k,out_t_channels=2)
 
-        self.Regressor=nn.Sequential(nn.Dropout(dropout_rate),nn.Linear(1024,2))
-        self.Softmax=nn.Softmax(dim=-1)
+        self.Regressor=torch.nn.Sequential(torch.nn.Dropout(dropout_rate),torch.nn.Linear(1024,2))
+        self.Softmax=torch.nn.Softmax(dim=-1)
 
         self.freeze_bn=freeze_bn
         self.freeze_backbone=freeze_backbone
-        self.GAP=nn.AdaptiveAvgPool3d(1)
+        self.GAP=torch.nn.AdaptiveAvgPool3d(1)
 
         self.freeze_bn_statics = freeze_bn_statics
         if freeze_blocks==None:
@@ -344,7 +344,7 @@ class I3D_SGA_STD(nn.Module):
     def freeze_batch_norm(self):
         if self.freeze_bn:
             for name, module in self.backbone.named_modules():
-                if isinstance(module,nn.BatchNorm3d) or isinstance(module,nn.BatchNorm2d):
+                if isinstance(module,torch.nn.BatchNorm3d) or isinstance(module,torch.nn.BatchNorm2d):
                     if name.split('.')[0] in self.freeze_blocks:
                         if self.freeze_bn_statics:
                             module.eval()
@@ -354,7 +354,7 @@ class I3D_SGA_STD(nn.Module):
                         module.bias.requires_grad=False
         else:
             for name, module in self.backbone.named_modules():
-                if isinstance(module,nn.BatchNorm3d) or isinstance(module,nn.BatchNorm2d):
+                if isinstance(module,torch.nn.BatchNorm3d) or isinstance(module,torch.nn.BatchNorm2d):
                     if name.split('.')[0] in self.freeze_blocks:
                         if self.freeze_bn_statics:
                             module.eval()
